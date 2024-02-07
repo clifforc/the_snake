@@ -157,6 +157,7 @@ class Snake(GameObject):
 
 
 def handle_keys(game_object):
+    """Function that process user input."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
