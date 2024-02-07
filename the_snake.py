@@ -46,6 +46,7 @@ clock = pygame.time.Clock()
 
 class GameObject:
     """Base class from which other game objects are inherited."""
+
     def __init__(self, body_color=BOARD_BACKGROUND_COLOR):
         self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
         self.body_color = body_color
@@ -57,14 +58,15 @@ class GameObject:
 
 class Apple(GameObject):
     """Class describing the apple and actions with it."""
+
     def __init__(self, body_color=APPLE_COLOR):
         super().__init__(body_color)
         self.body_color = body_color
 
     def randomize_position(self):
         """Set random apple position."""
-        self.position = ((randint(0, GRID_WIDTH-1) * GRID_SIZE),
-                         (randint(0, GRID_HEIGHT-1) * GRID_SIZE))
+        self.position = ((randint(0, GRID_WIDTH - 1) * GRID_SIZE),
+                         (randint(0, GRID_HEIGHT - 1) * GRID_SIZE))
 
     def draw(self, surface):
         """Draw apple"""
@@ -78,6 +80,7 @@ class Apple(GameObject):
 
 class Snake(GameObject):
     """Class describing the snake and its behavior."""
+
     def __init__(self, body_color=SNAKE_COLOR):
         super().__init__(body_color)
         self.body_color = body_color
@@ -184,6 +187,7 @@ def display_score(game_object):
 
 
 def main():
+    """Main function to run the game."""
     apple = Apple()
     snake = Snake()
     apple.randomize_position()
