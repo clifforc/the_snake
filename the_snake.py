@@ -1,3 +1,4 @@
+import sys
 from random import choice, randint
 
 import pygame
@@ -17,18 +18,11 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# Цвет фона - черный:
+# Цвета:
 BOARD_BACKGROUND_COLOR = (0, 0, 0)
-
 WHITE_COLOR = (255, 255, 255)
-
-# Цвет границы ячейки
 BORDER_COLOR = (93, 216, 228)
-
-# Цвет яблока
 APPLE_COLOR = (255, 0, 0)
-
-# Цвет змейки
 SNAKE_COLOR = (0, 255, 0)
 
 # Скорость движения змейки:
@@ -53,7 +47,7 @@ class GameObject:
 
     def draw(self, surface):
         """Blank method for drawing an object on the playing field."""
-        pass
+        raise NotImplementedError
 
 
 class Apple(GameObject):
@@ -98,10 +92,9 @@ class Snake(GameObject):
 
     def move(self):
         """Update snake position on the game field"""
-        head_position = self.get_head_position()
+        x, y = self.get_head_position()
         dx, dy = self.direction
-        new_head_position = (head_position[0] + dx * GRID_SIZE,
-                             head_position[1] + dy * GRID_SIZE)
+        new_head_position = (x + dx * GRID_SIZE, y + dy * GRID_SIZE)
         if new_head_position[0] < 0:
             new_head_position = (GRID_WIDTH * GRID_SIZE, new_head_position[1])
         elif new_head_position[0] >= GRID_WIDTH * GRID_SIZE:
@@ -164,7 +157,7 @@ def handle_keys(game_object):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            raise SystemExit
+            raise sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP and game_object.direction != DOWN:
                 game_object.next_direction = UP
@@ -176,11 +169,10 @@ def handle_keys(game_object):
                 game_object.next_direction = RIGHT
 
 
-def display_score(game_object):
+def display_score(score):
     """Display score at top left corner."""
     font = pygame.font.Font(None, 30)
-    text = font.render(f'SCORE: {game_object}', True,
-                       WHITE_COLOR)
+    text = font.render(f'SCORE: {score}', True, WHITE_COLOR)
     text_rect = text.get_rect()
     text_rect.topleft = (0, 0)
     screen.blit(text, text_rect)
